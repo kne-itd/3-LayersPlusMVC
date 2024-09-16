@@ -1,0 +1,45 @@
+﻿using DAL;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace BLL
+{
+    public class PatientRepository
+    {
+        public List<Patient> GetPatients()
+        {
+            DAL.DataAccess dataAccess = new DAL.DataAccess();
+            List<DAL.Patient> dalPatients = dataAccess.GetData();
+            List<Patient> patients = new List<Patient>();
+            foreach (var item in dalPatients)
+            {
+                patients.Add(new Patient
+                {
+                    animalType = item.animalType,
+                    patientId = item.patientId,
+                    patientName = item.patientName,
+                    dateOfBirth = item.dateOfBirth
+                });
+            }
+            return patients;
+        }
+        public bool UpdatePatent(Patient patient)
+        {
+            DAL.Patient p = new DAL.Patient
+            {
+                patientId = patient.patientId,
+                patientName = patient.patientName,
+                dateOfBirth=patient.dateOfBirth
+            };
+            DAL.DataAccess dataAccess = new DAL.DataAccess();
+           if (dataAccess.Update(p))
+            {
+                return true;
+            }
+           return false;
+        }
+    }
+}
