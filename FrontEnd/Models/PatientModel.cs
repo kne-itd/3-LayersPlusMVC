@@ -7,16 +7,21 @@ namespace FrontEnd.Models
         public int Id { get; set; }
         public string Name { get; set; }
 
+        private DateTime dob;
         [DataType(DataType.Date)]
-        public DateTime dateOfBirth { get; set; }
-        public int Age { get;}
-        public PatientModel() 
-        {
-            Age = DateTime.Today.Year - dateOfBirth.Year;
-            if (dateOfBirth.Date > DateTime.Today.AddYears(Age))
+        public DateTime dateOfBirth 
+        { 
+            get { return dob;}
+            set 
             {
-                Age--;
+                dob = value;
+                Age = DateTime.Today.Year - dateOfBirth.Year;
+                if (dateOfBirth.Date > DateTime.Today.AddYears(-Age))
+                {
+                    Age--;
+                }
             }
         }
+        public int Age { get; private set;}
     }
 }

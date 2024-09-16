@@ -9,7 +9,7 @@ namespace DAL
 {
     public class DataAccess
     {
-        string ConnectionString = "Server=10.130.64.202;" +
+        string ConnectionString = "Server=192.168.1.7;" +
             "Database=Vet;" +
             "Uid=Mac;" +
             "Pwd = 1234;";
