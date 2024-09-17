@@ -57,7 +57,6 @@ namespace DAL
                             patientName = Results.GetString(1),
                             dateOfBirth = Results.GetDateTime(2)
                        });
-                        //Console.WriteLine(Results.GetInt32(0) + " " + Results.GetString(1) + " " + Results.GetDateTime(2));
                     }
                 }
             }
@@ -72,7 +71,7 @@ namespace DAL
                 conn.Open();
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    string query = "UPDATE Patient SET patientName = @Name, dateOfBirth = @DOB " +
+                    string query = "UPDATE patient SET patientName = @Name, dateOfBirth = @DOB " +
                         "WHERE patientId = @Id";
 
                     cmd.CommandText = query;
@@ -97,14 +96,37 @@ namespace DAL
                 conn.Open();
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    string query = "CREATE Patient " +
+                    string query = "INSERT INTO patient " +
                         "(patientName, dateOfBirth ) " +
                         "VALUES " +
-                        "(@Name, @DOB ";
+                        "(@Name, @DOB )";
 
                     cmd.CommandText = query;
                     cmd.Parameters.AddWithValue("@Name", patient.patientName);
                     cmd.Parameters.AddWithValue("@DOB", patient.dateOfBirth);
+
+                    int result = cmd.ExecuteNonQuery();
+                    if (result == 1)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+            }
+        }
+
+        public bool Delete(int id)
+        {
+            using (var conn = new SqlConnection(GetConnectionString()))
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    string query = "DELETE FROM patient " +
+                        " WHERE patientId = @Id;";
+
+                    cmd.CommandText = query;
+                    cmd.Parameters.AddWithValue("@Id", id);
 
                     int result = cmd.ExecuteNonQuery();
                     if (result == 1)

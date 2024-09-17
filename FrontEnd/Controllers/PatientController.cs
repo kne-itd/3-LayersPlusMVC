@@ -61,8 +61,9 @@ namespace FrontEnd.Controllers
                 {
                     return RedirectToAction(nameof(Index));
                 };
+                return View();
             }
-            catch
+            catch 
             {
                 return View();
             }
@@ -108,7 +109,7 @@ namespace FrontEnd.Controllers
         // GET: PatientController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+                return View();
         }
 
         // POST: PatientController/Delete/5
@@ -118,7 +119,11 @@ namespace FrontEnd.Controllers
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                if (patientRepository.Delete(id))
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                return View();
             }
             catch
             {

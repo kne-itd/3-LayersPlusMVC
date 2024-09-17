@@ -57,5 +57,15 @@ namespace BLL
             }
             return false;
         }
+
+        public bool Delete(int id)
+        {
+            DataAccess dataAccess = new DataAccess();
+            if (dataAccess.Delete(id))
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }
