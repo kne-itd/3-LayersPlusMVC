@@ -7,14 +7,12 @@ using System.Threading.Tasks;
 
 namespace BLL
 {
-    public class PatientRepository
+    public class PatientRepository : IRepository
     {
-        
-
-        public List<Patient> GetPatients()
+        public List<Patient> Read()
         {
             DAL.DataAccess dataAccess = new DAL.DataAccess();
-            List<DAL.Patient> dalPatients = dataAccess.GetData();
+            List<DAL.Patient> dalPatients = dataAccess.GetPatients();
             List<Patient> patients = new List<Patient>();
             foreach (var item in dalPatients)
             {
@@ -28,22 +26,22 @@ namespace BLL
             }
             return patients;
         }
-        public bool UpdatePatent(Patient patient)
+        public bool Update(Patient patient)
         {
             DAL.Patient p = new DAL.Patient
             {
                 patientId = patient.patientId,
                 patientName = patient.patientName,
-                dateOfBirth=patient.dateOfBirth
+                dateOfBirth = patient.dateOfBirth
             };
             DAL.DataAccess dataAccess = new DAL.DataAccess();
-           if (dataAccess.Update(p))
+            if (dataAccess.Update(p))
             {
                 return true;
             }
-           return false;
+            return false;
         }
-        public bool CreatePatent(Patient patient)
+        public bool Create(Patient patient)
         {
             DAL.Patient p = new DAL.Patient
             {

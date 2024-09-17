@@ -10,7 +10,7 @@ namespace FrontEnd.Controllers
         private BLL.PatientRepository patientRepository = new BLL.PatientRepository();
         public PatientController()
         {
-            foreach (var item in patientRepository.GetPatients())
+            foreach (var item in patientRepository.Read())
             {
                 patients.Add(new PatientModel
                 {
@@ -57,7 +57,7 @@ namespace FrontEnd.Controllers
                     patientName = patient.Name,
                     dateOfBirth = patient.dateOfBirth
                 };
-                if (patientRepository.CreatePatent(p))
+                if (patientRepository.Create(p))
                 {
                     return RedirectToAction(nameof(Index));
                 };
@@ -94,7 +94,7 @@ namespace FrontEnd.Controllers
                     dateOfBirth = patient.dateOfBirth,
                     patientId = id
                 };
-                if (patientRepository.UpdatePatent(p))
+                if (patientRepository.Update(p))
                 {
                     return RedirectToAction(nameof(Index));
                 }

@@ -16,21 +16,12 @@ namespace FrontEnd.Controllers
 
         public IActionResult Index()
         {
-            List<PatientModel> patients = new List<PatientModel>();
-            BLL.PatientRepository patientRepository = new BLL.PatientRepository();
-            foreach (var item in patientRepository.GetPatients())
-            {
-                patients.Add(new PatientModel
-                {
-                    Id = item.patientId,
-                    Name = item.patientName,
-                    dateOfBirth = item.dateOfBirth
-                });
-            }
-
-            return View(patients);
+            return View();
         }
-
+        public IActionResult Privacy()
+        {
+            return View();
+        }
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -35,7 +35,7 @@ namespace DAL
             return ConnectionString;
         }
         
-        public List<Patient> GetData()
+        public List<Patient> GetPatients()
         {
             List<Patient> patients = new List<Patient>();
             using (var conn = new SqlConnection(GetConnectionString()))
