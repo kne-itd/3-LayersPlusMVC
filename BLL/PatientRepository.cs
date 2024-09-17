@@ -9,6 +9,8 @@ namespace BLL
 {
     public class PatientRepository
     {
+        
+
         public List<Patient> GetPatients()
         {
             DAL.DataAccess dataAccess = new DAL.DataAccess();
@@ -40,6 +42,20 @@ namespace BLL
                 return true;
             }
            return false;
+        }
+        public bool CreatePatent(Patient patient)
+        {
+            DAL.Patient p = new DAL.Patient
+            {
+                patientName = patient.patientName,
+                dateOfBirth = patient.dateOfBirth
+            };
+            DataAccess dataAccess = new DataAccess();
+            if (dataAccess.Create(p))
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

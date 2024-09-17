@@ -48,11 +48,19 @@ namespace FrontEnd.Controllers
         // POST: PatientController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(PatientModel patient)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                BLL.Patient p = new BLL.Patient
+                {
+                    patientName = patient.Name,
+                    dateOfBirth = patient.dateOfBirth
+                };
+                if (patientRepository.CreatePatent(p))
+                {
+                    return RedirectToAction(nameof(Index));
+                };
             }
             catch
             {
