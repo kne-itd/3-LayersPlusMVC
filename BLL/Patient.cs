@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DAL.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,7 @@ namespace BLL
         public int patientId { get; set; }
         public string patientName { get; set; }
         public DateTime dateOfBirth { get; set; }
-        public int animalType { get; set; }
+        public int animalTypeId { get; set; }
+        public AnimalType animalType { get; set; }
     }
 }

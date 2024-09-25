@@ -5,22 +5,23 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using DAL.Models;
 
 namespace DAL
 {
-    public class DataAccess
+    public class DataAccess : IDataAccess<Patient>
     {
         private string GetConnectionString()
         {
             // IP Addresses of db server
-            string HomeIP = "172.16.226.7";
+            string HomeIP = "192.168.1.7";
             string WorkIp = "10.130.64.202";
             // Check which network we currently are on
             string DbServerAddress = string.Empty;
             string hostName = Dns.GetHostName(); ;
             string CurrentIp = Dns.GetHostEntry(hostName).AddressList[1].ToString();
             //string CurrentIp = Dns.GetHostByName(hostName).AddressList[1].ToString();
-            if (CurrentIp.StartsWith("172."))
+            if (CurrentIp.StartsWith("192."))
             {
                 DbServerAddress = HomeIP;
             }
@@ -34,8 +35,8 @@ namespace DAL
             "Pwd = 1234;";
             return ConnectionString;
         }
-        
-        public List<Patient> GetPatients()
+
+        public IEnumerable<Patient> GetAll()
         {
             List<Patient> patients = new List<Patient>();
             using (var conn = new SqlConnection(GetConnectionString()))
@@ -44,23 +45,54 @@ namespace DAL
 
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    string sql = "SELECT * FROM Patient";
-                    cmd.CommandText = sql;
+                    string query = "SELECT " +
+                        "patientId," +
+                        "patientName," +
+                        "dateOfBirth," +
+                        "animaltype" +
+                        " FROM Patient";
+                    cmd.CommandText = query;
                     SqlDataReader Results = cmd.ExecuteReader();
 
                     while (Results.Read())
                     {
                         patients.Add(new Patient
                         {
-                            animalType = Results.GetInt32(4),
+                            animalType = Results.GetInt32(3),
                             patientId = Results.GetInt32(0),
                             patientName = Results.GetString(1),
                             dateOfBirth = Results.GetDateTime(2)
-                       });
+                        });
                     }
                 }
             }
             return patients;
+        }
+        public Patient GetById(int id)
+        {
+            Patient patient = new Patient();
+            using (var conn = new SqlConnection(GetConnectionString()))
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    string query = "SELECT " +
+                        "patientId," +
+                        "patientName," +
+                        "dateOfBirth," +
+                        "animaltype" +
+                        " FROM Patient";
+                    cmd.CommandText = query;
+                    cmd.Parameters.AddWithValue("@id", id);
+                    SqlDataReader Results = cmd.ExecuteReader();
+
+                    patient.patientId = Results.GetInt32(0);
+                    patient.patientName = Results.GetString(1);
+                    patient.animalType = Results.GetInt32(3);
+                    patient.dateOfBirth = Results.GetDateTime(2);
+                }
+            }
+            return patient;
         }
 
         public bool Update(Patient patient)
@@ -137,5 +169,7 @@ namespace DAL
                 }
             }
         }
+
+
     }
 }
