@@ -1,4 +1,5 @@
-﻿using FrontEnd.Models;
+﻿using BLL.Models;
+using FrontEnd.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -52,7 +53,7 @@ namespace FrontEnd.Controllers
         {
             try
             {
-                BLL.Patient p = new BLL.Patient
+                Patient p = new BLL.Models.Patient
                 {
                     patientName = patient.Name,
                     dateOfBirth = patient.dateOfBirth
@@ -89,7 +90,7 @@ namespace FrontEnd.Controllers
         {
             try
             {
-                BLL.Patient p = new BLL.Patient{
+                Patient p = new BLL.Models.Patient{
                     patientName = patient.Name,
                     dateOfBirth = patient.dateOfBirth,
                     patientId = id

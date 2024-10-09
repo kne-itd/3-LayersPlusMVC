@@ -6,23 +6,24 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL;
 using DAL.Models;
+using BLL.Models;
 
 namespace BLL
 {
-    public class PatientRepository : IGenericRepository<Patient>
+    public class PatientRepository : IGenericRepository<BLL.Models.Patient>
     {
         private DataAccess dataAccess;
         public PatientRepository()
         {
             dataAccess = new DataAccess();
         }
-        public IEnumerable<Patient> GetAll()
+        public IEnumerable<BLL.Models.Patient> GetAll()
         {
             List<DAL.Models.Patient>? dalPatients =  dataAccess.GetAll() as List<DAL.Models.Patient>;
-            List<Patient> patients = new List<Patient>();
+            List<BLL.Models.Patient> patients = new List<BLL.Models.Patient>();
             foreach (var item in dalPatients)
             {
-                patients.Add(new Patient
+                patients.Add(new BLL.Models.Patient
                 {
                     animalTypeId = item.animalType,
                     patientId = item.patientId,
@@ -32,10 +33,10 @@ namespace BLL
             }
             return patients;
         }
-        public Patient GetById(int id)
+        public BLL.Models.Patient GetById(int id)
         {
             DAL.Models.Patient p = dataAccess.GetById(id);
-            Patient patient = new Patient
+            BLL.Models.Patient patient = new BLL.Models.Patient
             {
                 animalTypeId = p.animalType,
                 patientId = p.patientId,
@@ -44,7 +45,7 @@ namespace BLL
             };
             return patient;
         }
-        public bool Update(Patient patient)
+        public bool Update(BLL.Models.Patient patient)
         {
             DAL.Models.Patient p = new DAL.Models.Patient
             {
@@ -58,7 +59,7 @@ namespace BLL
             }
             return false;
         }
-        public bool Insert(Patient patient)
+        public bool Insert(BLL.Models.Patient patient)
         {
             DAL.Models.Patient p = new DAL.Models.Patient
             {

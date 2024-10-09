@@ -121,7 +121,7 @@ namespace DAL
                         Result.Close();
                         //               List<Consultation> consultations = new List<Consultation>();
                         string sql = "SELECT " +
-                            "patientTreatmentId AS Id" +
+                            "patientTreatmentId AS Id," +
                             "patientName," +
                             "animaltype.animaltype," +
                             "treatment," +
@@ -150,10 +150,10 @@ namespace DAL
                                 },
                                 Treatment = new Treatment
                                 {
-                                    treatment = Results.GetString(2),
-                                    Price = Results.GetDecimal(3),
+                                    treatment = Results.GetString(3),
+                                    Price = Results.GetDecimal(4),
                                 },
-                                ConsultationPrice = Results.GetDecimal(4),
+                                ConsultationPrice = Results.GetDecimal(5),
                             });
                             
                         }

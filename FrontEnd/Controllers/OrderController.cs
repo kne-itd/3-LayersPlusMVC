@@ -1,4 +1,4 @@
-﻿using BLL;
+﻿using BLL.Models;
 using FrontEnd.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -34,7 +34,7 @@ namespace FrontEnd.Controllers
         // GET: OrderController/Details/5
         public ActionResult Details(int id)
         {
-            BLL.Order BllOrder = orderRepository.GetById(id);
+            Order BllOrder = orderRepository.GetById(id);
             OrderModel order = new OrderModel
             {
                 Id = BllOrder.OrderId,
@@ -44,9 +44,11 @@ namespace FrontEnd.Controllers
                 Zip = BllOrder.Owner.zip,
                 City = BllOrder.Owner.city
             };
+            order.Consultations = new List<ConsultationModel>();
+            float subTotal = 0;
             foreach (var item in BllOrder.Consultations)
             {
-                order.Consultations = new List<ConsultationModel>();
+                subTotal += (float) item.ConsultationPrice;
                 order.Consultations.Add(new ConsultationModel
                 {
                     Id = item.Id,
@@ -66,6 +68,12 @@ namespace FrontEnd.Controllers
                     }
                 });
             }
+            float taxRate = 0.25F;
+            float tax = taxRate * subTotal;
+            float total = subTotal + tax;
+            ViewBag.Subtotal = subTotal.ToString("C2");
+            ViewBag.Tax = tax.ToString("C2");
+            ViewBag.Total = total.ToString("C2");
             return View(order);
         }
 

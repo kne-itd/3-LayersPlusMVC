@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BLL
 {
-    public class OrderRepository : IGenericRepository<Order>
+    public class OrderRepository : IGenericRepository<BLL.Models.Order>
     {
         private OrderAccess orderAccess;
         public OrderRepository()
@@ -22,13 +22,13 @@ namespace BLL
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Order> GetAll()
+        public IEnumerable<BLL.Models.Order> GetAll()
         {
             List<DAL.Models.Order>? dalOrders = orderAccess.GetAll() as List<DAL.Models.Order>;
-            List<Order> orders = new List<Order>();
+            List<BLL.Models.Order> orders = new List<BLL.Models.Order>();
             foreach (var item in dalOrders)
             {
-                orders.Add(new Order
+                orders.Add(new BLL.Models.Order
                 {
                     OrderId = item.OrderId,
                     OrderDate = item.OrderDate,
@@ -46,10 +46,10 @@ namespace BLL
             return orders;
         }
 
-        public Order GetById(int id)
+        public BLL.Models.Order GetById(int id)
         {
             DAL.Models.Order dalOrder = orderAccess.GetById(id);
-            Order order = new Order
+            BLL.Models.Order order = new BLL.Models.Order
             {
                 OrderId = dalOrder.OrderId,
                 OrderDate = dalOrder.OrderDate,
@@ -69,7 +69,7 @@ namespace BLL
                     {
                         Id = item.Id,
                         ConsultationPrice = item.ConsultationPrice,
-                        Patient = new Patient
+                        Patient = new BLL.Models.Patient
                         {
                             patientId = item.Patient.patientId,
                             patientName = item.Patient.patientName,
@@ -86,12 +86,12 @@ namespace BLL
             return order;
         }
 
-        public bool Insert(Order t)
+        public bool Insert(BLL.Models.Order t)
         {
             throw new NotImplementedException();
         }
 
-        public bool Update(Order t)
+        public bool Update(BLL.Models.Order t)
         {
             throw new NotImplementedException();
         }

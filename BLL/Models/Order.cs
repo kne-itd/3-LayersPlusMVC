@@ -1,6 +1,4 @@
-﻿using BLL.Models;
-
-namespace BLL
+﻿namespace BLL.Models
 {
     public class Order
     {

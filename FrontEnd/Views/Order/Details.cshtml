@@ -47,6 +47,64 @@
             @Html.DisplayFor(model => model.Zip)
         </dd>
     </dl>
+    <table  class="table">
+        <thead>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.Consultations[0].Id)</td>
+                <td>@Html.DisplayNameFor(model => model.Consultations[0].Patient.Name)</td>
+                <td>@Html.DisplayNameFor(model => model.Consultations[0].Treatment.treatment)</td>
+                <td>@Html.DisplayNameFor(model => model.Consultations[0].Treatment.Price)</td>
+                <td>@Html.DisplayNameFor(model => model.Consultations[0].ConsultationPrice)</td>
+            </tr>
+        </thead>
+        @foreach (var item in Model.Consultations)
+        {
+            <tr>
+                <td>
+                     @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Patient.Name)
+                </td>
+@*                 <td>
+                    @Html.DisplayFor(modelItem => item.Patient)
+                </td> *@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Treatment.treatment)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Treatment.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ConsultationPrice)
+                </td>
+
+            </tr>
+        }
+        <tfoot>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Ialt:</td>
+            <td>@ViewBag.Subtotal</td>
+        </tr>
+         <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Moms:</td>
+            <td>@ViewBag.Tax</td>
+        </tr>
+         <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Ialt inkl. moms:</td>
+            <td>@ViewBag.Total</td>
+        </tr>
+        </tfoot>
+    </table>
 </div>
 <div>
     @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |

@@ -1,10 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace FrontEnd.Models
 {
     public class PatientModel
     {
         public int Id { get; set; }
+        [DisplayName("Patientnavn")]
+
         public string Name { get; set; }
 
         private DateTime dob;
